@@ -9,10 +9,10 @@ mutable struct HCAS_MDP <: MDP{stateType, actType}
     vints::Array{Float64,1}
     pras::Array{Int64,1}
     discount_factor::Float64
-    turns::Dict{Int,Tuple{Vector{Float64},Vector{Float64}}}
+    accels::Dict{Int,Tuple{Vector{Float64},Vector{Float64}}}
     currentTau::Float64
 end
-HCAS_MDP() = HCAS_MDP(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS,ACTIONS,discount_f,turns,0.0)
+HCAS_MDP() = HCAS_MDP(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS,ACTIONS,discount_f,accels,0.0)
 #HCAS_MDP(tau::Float64) = HCAS_MDP(RANGES,THETAS,PSIS,OWNSPEES,INTRSPEEDS,discount_f,turns,tau)
 
 # Define necessary functions for HCAS MDP

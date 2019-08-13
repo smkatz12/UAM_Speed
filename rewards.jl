@@ -47,8 +47,7 @@ function POMDPs.reward(mdp::HCAS_MDP, s::stateType, ra::actType)
             rew-=1e-3
         elseif weaken(pra,ra)
             rew-=2e-4
-        end
-        
+        end        
     # ra = COC
     else
         rew -= 1e-2*exp(-dCPA/500.0)*exp(-tCPA/10.0) /factor #dCPA/300.0 for v5
