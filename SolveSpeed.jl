@@ -11,7 +11,8 @@
 
 
 ### OPTIONS ###
-saveFile = "./Qtables/HCAS_oneSpeed_v6.h5"
+saveFile = "/scratch/smkatz/test_speed.h5"
+binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test_speed.bin"
 # nTau_warm = 99
 nTau_max = 12
 ###############
@@ -116,3 +117,17 @@ for i = 1:length(τs)
 	end
 	Q_out[1+(i-1)*ns:(i*ns),:] = deepcopy(Qnext)
 end
+
+println("Writing Qvalues")
+h5open(saveFile, "w") do file
+    write(file, "q", Q_out) 
+end
+
+s = open(binFile, "w")
+# Write the dimensions of the array at the start of the file
+for j = 1:ndims(Q_out)
+    write(s, size(Q_out, j))
+end
+# Write the values
+write(s, Q_out)
+close(s)
