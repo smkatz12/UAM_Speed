@@ -7,7 +7,7 @@ using LocalFunctionApproximation
 using StaticArrays
 
 include("constants.jl")
-include("hCAS.jl")
+include("horizCAS.jl")
 include("transitions.jl")
 include("rewards.jl")
 

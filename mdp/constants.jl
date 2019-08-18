@@ -1,6 +1,7 @@
-export COC,WD,WA,SD,SA, stateType, actType, ACTIONS, discount_f, RANGES,THETAS,PSIS,OWNSPEEDS,INTRPSEEDS, interp, turns
+export COC,WD,WA,SD,SA, dt, stateType, actType, ACTIONS, discount_f, RANGES,THETAS,PSIS,OWNSPEEDS,INTRPSEEDS, interp, turns
 
 g = 9.81
+mps2fps = 3.28084
 
 # ADVISORY INDICES
 COC=0
@@ -8,6 +9,8 @@ WD=1
 WA=2
 SD=3
 SA=4
+
+dt=4
 
 # State Type:
 stateType = Tuple{Float64,Float64,Float64,Float64,Float64,Int}
@@ -17,12 +20,18 @@ ACTIONS = [COC,WD,WA,SD,SA]
 # Default parameters
 discount_f = 1.0
 
-### STATE CUTPOINTS ###
-RANGES = [0.0,25.0,50.0,75.0,100.0,150.0,200.0,300.0,400.0,500.0,510.0,750.0,1000.0,1500.0,2000.0,3000.0,4000.0,5000.0,7000.0,9000.0,11000.0,13000.0,15000.0]
-THETAS = Array(LinRange(-pi,pi,41))
-PSIS   = Array(LinRange(-pi,pi,41))
-OWNSPEEDS = [0.0, 25.0, 50.0, 75.0, 100.0, 125.0, 150.0, 175.0, 200.0, 250.0, 300.0]   #ft/s
-INTRSPEEDS = [0.0, 50.0, 100.0, 150.0, 200.0, 250.0, 300.0] #ft/s
+# ### STATE CUTPOINTS ###
+# RANGES = [0.0,25.0,50.0,75.0,100.0,150.0,200.0,300.0,400.0,500.0,510.0,750.0,1000.0,1500.0,2000.0,3000.0,4000.0,5000.0,7000.0,9000.0,11000.0,13000.0,15000.0] #ft
+# THETAS = Array(LinRange(-π,π,21))
+# PSIS   = Array(LinRange(-π,π,21))
+# OWNSPEEDS = [0.0, 4.0, 8.0, 12.0, 16.0, 20.0, 24.0, 28.0, 32.0, 36.0].*mps2fps   #ft/s
+# INTRSPEEDS = [0.0, 8.0, 16.0, 24.0, 32.0, 40.0].*mps2fps #ft/s
+
+RANGES = [0.0,25.0,50.0] #ft
+THETAS = Array(LinRange(-π,π,3))
+PSIS   = Array(LinRange(-π,π,3))
+OWNSPEEDS = [0.0, 4.0].*mps2fps   #ft/s
+INTRSPEEDS = [0.0, 8.0].*mps2fps #ft/s
 
 interp = LocalGIFunctionApproximator(RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS,ACTIONS)) # Create the local function approximator using the grid
 
