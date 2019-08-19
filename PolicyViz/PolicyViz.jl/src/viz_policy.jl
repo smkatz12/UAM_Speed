@@ -68,7 +68,7 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
     Q = nothing
     if tablePath!=""
         Q = h5open(tablePath, "r") do file
-            read(file, "y")
+            read(file, "q")
         end
 
         rnges = h5open(tablePath, "r") do file
