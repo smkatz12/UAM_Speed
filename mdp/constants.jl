@@ -21,17 +21,17 @@ ACTIONS = [COC,WD,WA,SD,SA]
 discount_f = 1.0
 
 # ### STATE CUTPOINTS ###
-# RANGES = [0.0,25.0,50.0,75.0,100.0,150.0,200.0,300.0,400.0,500.0,510.0,750.0,1000.0,1500.0,2000.0,3000.0,4000.0,5000.0,7000.0,9000.0,11000.0,13000.0,15000.0] #ft
+RANGES = [0.0,25.0,50.0,75.0,100.0,150.0,200.0,300.0,400.0,500.0,510.0,750.0,1000.0,1500.0,2000.0,3000.0,4000.0,5000.0,7000.0,9000.0,11000.0,13000.0,15000.0] #ft
+THETAS = Array(LinRange(-π,π,21))
+PSIS   = Array(LinRange(-π,π,21))
+OWNSPEEDS = [0.0, 4.0, 8.0, 12.0, 16.0, 20.0, 24.0, 28.0, 32.0, 36.0].*mps2fps   #ft/s
+INTRSPEEDS = [0.0, 8.0, 16.0, 24.0, 32.0, 40.0].*mps2fps #ft/s
+
+# RANGES = [0.0,25.0,50.0] #ft
 # THETAS = Array(LinRange(-π,π,21))
 # PSIS   = Array(LinRange(-π,π,21))
-# OWNSPEEDS = [0.0, 4.0, 8.0, 12.0, 16.0, 20.0, 24.0, 28.0, 32.0, 36.0].*mps2fps   #ft/s
-# INTRSPEEDS = [0.0, 8.0, 16.0, 24.0, 32.0, 40.0].*mps2fps #ft/s
-
-RANGES = [0.0,25.0,50.0] #ft
-THETAS = Array(LinRange(-π,π,3))
-PSIS   = Array(LinRange(-π,π,3))
-OWNSPEEDS = [0.0, 4.0].*mps2fps   #ft/s
-INTRSPEEDS = [0.0, 8.0].*mps2fps #ft/s
+# OWNSPEEDS = [0.0, 4.0].*mps2fps   #ft/s
+# INTRSPEEDS = [0.0, 8.0].*mps2fps #ft/s
 
 interp = LocalGIFunctionApproximator(RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS,ACTIONS)) # Create the local function approximator using the grid
 
