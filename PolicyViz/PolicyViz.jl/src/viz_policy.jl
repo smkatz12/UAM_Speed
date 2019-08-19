@@ -71,14 +71,14 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
             read(file, "q")
         end
 
-        rnges = h5open(tablePath, "r") do file
-            read(file, "ranges")
-        end
-        means = h5open(tablePath, "r") do file
-            read(file, "means")
-        end
+        # rnges = h5open(tablePath, "r") do file
+        #     read(file, "ranges")
+        # end
+        # means = h5open(tablePath, "r") do file
+        #     read(file, "means")
+        # end
 
-        Q = Q.*rnges[end].+means[end]
+        # Q = Q.*rnges[end].+means[end]
     end
 
     grid  = RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS)
