@@ -84,11 +84,11 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
     grid  = RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS)
     
     COC = RGB(1.,1.,1.) # white
-    SR = RGB(.0,.0,.5) # navy
-    SL = RGB(.0,.600,.0) # green
-    WR = RGB(.5,.5,.5) # grey
-    WL = RGB(.7,.9,.0) # neon green
-    ra_colors = [SL,WL,COC,WR,SR]
+    SA = RGB(.0,.0,.5) # navy
+    SD = RGB(.0,.600,.0) # green
+    WA = RGB(.5,.5,.5) # grey
+    WD = RGB(.7,.9,.0) # neon green
+    ra_colors = [COC,WD,WA,SD,SA]
     bg_colors = [COC]
     
     # Create scatter plot classes for color key
@@ -225,10 +225,10 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
         push!(g, Axis([
             Plots.Image(f, (-2,2), (-2,2),colormap = ColorMaps.RGBArrayMap(bg_colors),colorbar=false),
             Plots.Scatter(xx, yy, zz, scatterClasses=sc),
-            Plots.Node("SD ",0.25,0.915,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("COC ",0.25,0.915,style="black,anchor=west", axis="axis description cs"),
             Plots.Node("WD ",0.25,0.790,style="black,anchor=west", axis="axis description cs"),
-            Plots.Node("COC",0.25,0.665,style="black,anchor=west", axis="axis description cs"),
-            Plots.Node("WA ",0.25,0.540,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("WA ",0.25,0.665,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("SD ",0.25,0.540,style="black,anchor=west", axis="axis description cs"),
             Plots.Node("SA ",0.25,0.415,style="black,anchor=west", axis="axis description cs"),
             ],style="xshift=-1.4cm",hideAxis =true))
         
