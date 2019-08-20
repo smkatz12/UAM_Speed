@@ -169,7 +169,7 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
             end
             th = atan(y,x)
             bel = get_belief([r,th,deg2rad.(psi),ownspeed,intrspeed],grid,false)
-            qvals = Q[:,bel.rowval[1]]
+            qvals = Q[bel.rowval[1],:] #Q[:,bel.rowval[1]]
             return rad2deg.(ACTIONS[findmax(qvals)[2]])
         end # function get_heat
         
