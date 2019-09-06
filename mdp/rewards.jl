@@ -33,7 +33,7 @@ function POMDPs.reward(mdp::HCAS_MDP, s::stateType, ra::actType)
         end
     end
     factor=1.0
-    if pra!=COC
+    if pra != COC
         factor=0.1 # factor always equals 1.0 for v5
     end
     if ra != COC
@@ -41,7 +41,7 @@ function POMDPs.reward(mdp::HCAS_MDP, s::stateType, ra::actType)
         if strongAlert(ra)
             rew-=2e-3*factor
         end
-        if (pra!=COC) && (!sameSense(pra,ra))
+        if (pra != COC) && (!sameSense(pra,ra))
             rew-=5e-2
         elseif strengthen(pra,ra)
             rew-=1e-3

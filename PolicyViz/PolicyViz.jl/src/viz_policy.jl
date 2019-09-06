@@ -81,13 +81,13 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
         # Q = Q.*rnges[end].+means[end]
     end
 
-    grid  = RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS)
+    grid  = RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS, PRAS, VERTICAL_TAUS)
     
-    COC = RGB(1.,1.,1.) # white
-    SA = RGB(.0,.0,.5) # navy
-    SD = RGB(.0,.600,.0) # green
-    WA = RGB(.5,.5,.5) # grey
-    WD = RGB(.7,.9,.0) # neon green
+    COC = RGB(1.0,1.0,1.0) # white
+    WD = RGB(255.0/255.0,204.0/255.0,153.0/255.0) # light orange
+    WA = RGB(153.0/255.0,255.0/255.0,153.0/255.0) # light green
+    SD = RGB(255.0/255.0,128.0/255.0,0.0/255.0) # orange
+    SA = RGB(0.0/255.0,153.0/255.0,0.0/255.0) # green
     ra_colors = [COC,WD,WA,SD,SA]
     bg_colors = [COC]
     
@@ -95,7 +95,7 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
     sc_string = "{"
     for i=0:4
         define_color("ra_$i",  ra_colors[i+1])
-        if i==2
+        if i==0
             sc_string *= "ra_$i={mark=square, style={black, mark options={fill=ra_$i}, mark size=6}},"
         else
             sc_string *= "ra_$i={style={ra_$i, mark size=6}},"
@@ -113,13 +113,18 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
     @manipulate for psi  = convert(Array{Int32,1},round.(rad2deg.(PSIS))),
         ownspeed = OWNSPEEDS,
         intrspeed = INTRSPEEDS,
+        tau = VERTICAL_TAUS,
         zoom = 1.0,
+        pra = action_names,
         nbin = [100,150,200,250,1000],
         savePlot = [false,true],
         xshift = 0.0,
         yshift = 0.0,
         xscale = 1.0,
         yscale = 1.0
+
+        # Get previous RA index
+        pra = findfirst(pra.==action_names) - 1 # -1 I think?
         
         # Ensure that zoom and scale factors don't result in dividing by zero or negative numbers
         zoom = zoom <0.1 ? 0.1 : zoom
@@ -168,9 +173,9 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
                 return 0.0
             end
             th = atan(y,x)
-            bel = get_belief([r,th,deg2rad.(psi),ownspeed,intrspeed],grid,false)
+            bel = get_belief([r,th,deg2rad.(psi),ownspeed,intrspeed,pra,tau],grid,false)
             qvals = Q[bel.rowval[1],:] #Q[:,bel.rowval[1]]
-            return rad2deg.(ACTIONS[findmax(qvals)[2]])
+            return argmax(qvals)
         end # function get_heat
         
         
@@ -199,7 +204,7 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
             push!(g, Axis([
                         Plots.Image(get_heat1, (-1*RANGEMAX/zoom/xscale - xshift, RANGEMAX/zoom/xscale- xshift), 
                             (-1*RANGEMAX/zoom/yscale- yshift, RANGEMAX/zoom/yscale- yshift), 
-                            zmin = -3, zmax = 3,
+                            zmin = 1, zmax = 5,
                             xbins = nbin, ybins = nbin,
                             colormap = ColorMaps.RGBArrayMap(ra_colors), colorbar=false),
                         Plots.Command(getACString(0.0,0.0,0.0,"black","white")),
@@ -234,7 +239,7 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
         
         # Save plot if desired. Don't return g if want to save, since returning g will cleanup and delete the png images.
         if savePlot
-            PGFPlots.save("PolicyPlot.tex", g, include_preamble=true)
+            PGFPlots.save("PolicyPlot.pdf", g, include_preamble=true)
         else           
             return g
         end

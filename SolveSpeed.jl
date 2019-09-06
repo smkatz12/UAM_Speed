@@ -13,7 +13,7 @@
 ### OPTIONS ###
 saveFile = "/scratch/smkatz/test_speed.h5"
 binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test_speed.bin"
-# nTau_warm = 99
+nTau_warm = 6
 nTau_max = 60
 ###############
 
@@ -107,16 +107,38 @@ Q_out = zeros(ns*length(τs),na)
 # 	Q_out[1+(i-1)*ns:(i*ns),:] = deepcopy(Qnext)
 # end
 
-for i = 1:length(τs)
-	println("τ = $(τs[i])")
-	if i == 1
-		init_qmat = zeros(ns, na)
-		Qnext = get_Q(τs[1], init_qmat)
-	else
-		Qnext = get_Q(τs[i], Q_out[1+(i-2)*ns:((i-1)*ns),:])
-	end
-	Q_out[1+(i-1)*ns:(i*ns),:] = deepcopy(Qnext)
+Qtransfer = zeros(ns,na)
+for i = 1:nTau_warm
+    println("warmup: $i")
+    if i == 1
+        init_qmat = zeros(ns, na)
+        Qnext = get_Q(0, init_qmat)
+    else
+        Qnext = get_Q(0, Qtransfer)
+    end
+    Qtransfer[:,:] = deepcopy(Qnext)
 end
+
+for i = 1:length(τs)
+    println("τ = $(τs[i])")
+    if i == 1
+        Qnext = get_Q(τs[1], Qtransfer)
+    else
+        Qnext = get_Q(τs[i], Q_out[1+(i-2)*ns:((i-1)*ns),:])
+    end
+    Q_out[1+(i-1)*ns:(i*ns),:] = deepcopy(Qnext)
+end
+
+# for i = 1:length(τs)
+# 	println("τ = $(τs[i])")
+# 	if i == 1
+# 		init_qmat = zeros(ns, na)
+# 		Qnext = get_Q(τs[1], init_qmat)
+# 	else
+# 		Qnext = get_Q(τs[i], Q_out[1+(i-2)*ns:((i-1)*ns),:])
+# 	end
+# 	Q_out[1+(i-1)*ns:(i*ns),:] = deepcopy(Qnext)
+# end
 
 println("Writing Qvalues")
 h5open(saveFile, "w") do file
