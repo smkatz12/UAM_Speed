@@ -2,7 +2,7 @@
 sameSense(pra::Int, ra::Int) = mod(pra,2)==mod(ra,2)
 strengthen(pra::Int, ra::Int) = ra>pra
 weaken(pra::Int,ra::Int) = ra < pra
-strongAlert(ra::Int) = ra > 2
+strongAlert(ra::Int) = ra > 4
 
 # Reward function for HCAS MDP
 function POMDPs.reward(mdp::HCAS_MDP, s::stateType, ra::actType)

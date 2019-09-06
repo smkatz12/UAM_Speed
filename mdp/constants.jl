@@ -1,21 +1,23 @@
-export COC,WD,WA,SD,SA, dt, stateType, actType, ACTIONS, discount_f, RANGES,THETAS,PSIS,OWNSPEEDS,INTRPSEEDS, interp, turns
+export COC,ND,NA,WD,WA,SD,SA, dt, stateType, actType, ACTIONS, discount_f, RANGES,THETAS,PSIS,OWNSPEEDS,INTRPSEEDS, interp, turns
 
 g = 9.81
 mps2fps = 3.28084
 
 # ADVISORY INDICES
 COC=0
-WD=1
-WA=2
-SD=3
-SA=4
+ND=1
+NA=2
+WD=3
+WA=4
+SD=5
+SA=6
 
 dt=4
 
 # State Type:
 stateType = Tuple{Float64,Float64,Float64,Float64,Float64,Int}
 actType = Int
-ACTIONS = [COC,WD,WA,SD,SA]
+ACTIONS = [COC,ND,NA,WD,WA,SD,SA]
 
 # Default parameters
 discount_f = 1.0
@@ -39,6 +41,8 @@ interp = LocalGIFunctionApproximator(RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,
 ### Dictionaries to define transitions ###
 probs = [0.5,0.25,0.25]
 accels = Dict(COC=>([0.34,0.33,0.33],[0.0,-0.01g,0.01g]),
+			  ND=>(probs,[0.0g,0.01g,0.03g]),
+			  NA=>(probs,[0.0g,-0.01g,-0.03g]),
               WD=>(probs,[-0.04g,-0.035g,-0.045g]),
               WA=>(probs,[0.04g,0.035g,0.045g]),
               SD=>(probs,[-0.08g,-0.075g,-0.085g]),

@@ -84,16 +84,18 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
     grid  = RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS, PRAS, VERTICAL_TAUS)
     
     COC = RGB(1.0,1.0,1.0) # white
-    WD = RGB(255.0/255.0,204.0/255.0,153.0/255.0) # light orange
-    WA = RGB(153.0/255.0,255.0/255.0,153.0/255.0) # light green
-    SD = RGB(255.0/255.0,128.0/255.0,0.0/255.0) # orange
-    SA = RGB(0.0/255.0,153.0/255.0,0.0/255.0) # green
-    ra_colors = [COC,WD,WA,SD,SA]
+    ND = RGB(255.0/255.0,204.0/255.0,153.0/255.0) # light orange
+    NA = RGB(153.0/255.0,255.0/255.0,153.0/255.0) # light green
+    WD = RGB(255.0/255.0,128.0/255.0,0.0/255.0) # orange
+    WA = RGB(0.0/255.0,153.0/255.0,0.0/255.0) # green
+    SD = RGB(208.0/255.0,62.0/255.0,0.0/255.0) # dark orange
+    SA = RGB(0.0/255.0,51.0/255.0,0.0/255.0) # dark green    
+    ra_colors = [COC,ND,NA,WD,WA,SD,SA]
     bg_colors = [COC]
     
     # Create scatter plot classes for color key
     sc_string = "{"
-    for i=0:4
+    for i=0:6
         define_color("ra_$i",  ra_colors[i+1])
         if i==0
             sc_string *= "ra_$i={mark=square, style={black, mark options={fill=ra_$i}, mark size=6}},"
@@ -104,9 +106,9 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
     
     # Color key as a scatter plot
     sc_string=sc_string[1:end-1]*"}"
-    xx = [-1.5,-1.5,-1.5, -1.5, -1.5]
-    yy = [1.65,1.15,0.65, 0.15, -0.35]
-    zz = ["ra_0","ra_1","ra_2","ra_3","ra_4"]
+    xx = [-1.5,-1.5,-1.5, -1.5, -1.5, -1.5, -1.5]
+    yy = [1.65,1.15,0.65, 0.15, -0.35, -0.85, -1.35]
+    zz = ["ra_0","ra_1","ra_2","ra_3","ra_4","ra_5","ra_6"]
     sc = string(sc_string)
     
     # Create manipulatable plotting tool
@@ -231,10 +233,12 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
             Plots.Image(f, (-2,2), (-2,2),colormap = ColorMaps.RGBArrayMap(bg_colors),colorbar=false),
             Plots.Scatter(xx, yy, zz, scatterClasses=sc),
             Plots.Node("COC ",0.25,0.915,style="black,anchor=west", axis="axis description cs"),
-            Plots.Node("WD ",0.25,0.790,style="black,anchor=west", axis="axis description cs"),
-            Plots.Node("WA ",0.25,0.665,style="black,anchor=west", axis="axis description cs"),
-            Plots.Node("SD ",0.25,0.540,style="black,anchor=west", axis="axis description cs"),
-            Plots.Node("SA ",0.25,0.415,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("ND ",0.25,0.790,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("NA ",0.25,0.665,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("WD ",0.25,0.540,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("WA ",0.25,0.415,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("SD ",0.25,0.290,style="black,anchor=west", axis="axis description cs"),
+            Plots.Node("SA ",0.25,0.165,style="black,anchor=west", axis="axis description cs"),
             ],style="xshift=-1.4cm",hideAxis =true))
         
         # Save plot if desired. Don't return g if want to save, since returning g will cleanup and delete the png images.
