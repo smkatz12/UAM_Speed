@@ -1,4 +1,4 @@
-module HCAS
+#module HCAS
 
 using POMDPs
 using POMDPModelTools
@@ -11,4 +11,4 @@ include("horizCAS.jl")
 include("transitions.jl")
 include("rewards.jl")
 
-end # module
+#end # module

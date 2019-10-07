@@ -1,4 +1,4 @@
-export COC,WD,WA,SD,SA, dt, stateType, actType, ACTIONS, discount_f, RANGES,THETAS,PSIS,OWNSPEEDS,INTRPSEEDS, interp, turns
+#export COC,WD,WA,SD,SA, dt, stateType, actType, ACTIONS, discount_f, RANGES,THETAS,PSIS,OWNSPEEDS,INTRPSEEDS, interp, turns
 
 g = 9.81
 mps2fps = 3.28084

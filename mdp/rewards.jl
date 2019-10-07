@@ -32,25 +32,44 @@ function POMDPs.reward(mdp::HCAS_MDP, s::stateType, ra::actType)
             rew -= 1.0*exp(-(r-500.0)/500.0) # /300.0 for v5
         end
     end
-    factor=1.0
-    if pra != COC
-        factor=0.1 # factor always equals 1.0 for v5
-    end
+
+
+    factor=mdp.factor
     if ra != COC
-        rew-=5e-4 *factor#1e-9
+        rew-=5e-4*factor
         if strongAlert(ra)
             rew-=2e-3*factor
         end
         if (pra != COC) && (!sameSense(pra,ra))
-            rew-=5e-2
+            rew-=5e-2*factor
         elseif strengthen(pra,ra)
-            rew-=1e-3
+            rew-=1e-3*factor
         elseif weaken(pra,ra)
-            rew-=2e-4
+            rew-=2e-4*factor
         end        
     # ra = COC
     else
-        rew -= 1e-2*exp(-dCPA/500.0)*exp(-tCPA/10.0) /factor #dCPA/300.0 for v5
+        rew -= 1e-2*exp(-dCPA/500.0)*exp(-tCPA/10.0)*factor #dCPA/300.0 for v5
     end
+
+    # if pra != COC
+    #     factor=0.1 # factor always equals 1.0 for v5
+    # end
+    # if ra != COC
+    #     rew-=5e-4 *factor#1e-9
+    #     if strongAlert(ra)
+    #         rew-=2e-3*factor
+    #     end
+    #     if (pra != COC) && (!sameSense(pra,ra))
+    #         rew-=5e-2
+    #     elseif strengthen(pra,ra)
+    #         rew-=1e-3
+    #     elseif weaken(pra,ra)
+    #         rew-=2e-4
+    #     end        
+    # # ra = COC
+    # else
+    #     rew -= 1e-2*exp(-dCPA/500.0)*exp(-tCPA/10.0) /factor #dCPA/300.0 for v5
+    # end
     return rew
 end
