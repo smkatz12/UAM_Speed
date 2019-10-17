@@ -1,5 +1,5 @@
 #Regression Constants
-export PRAS,INTRSPEEDS,THETAS,PSIS,OWNSPEEDS,ACTIONS,VERTICAL_TAUS,RANGES, nstates, action_names
+#export PRAS,INTRSPEEDS,THETAS,PSIS,OWNSPEEDS,ACTIONS,VERTICAL_TAUS,RANGES, nstates, action_names
 
 mps2fps = 3.28084
 dt_viz = 4

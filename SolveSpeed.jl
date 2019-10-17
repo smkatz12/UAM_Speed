@@ -22,7 +22,7 @@ ns = n_interpolating_points(interp)
 na = length(ACTIONS)
 τs = collect(0:dt:nTau_max)
 
-function get_Q(tau, init_qmat; factor=1.0)
+function get_Q(tau, init_qmat; factor=0.4)
 	mdp = HCAS_MDP()
 	mdp.currentTau = tau
     mdp.factor = factor

@@ -1,5 +1,5 @@
 #Julia implementation of "load_network" function
-export NNet, read_network, evaluate_network, evaluate_network_multiple, num_inputs
+#export NNet, read_network, evaluate_network, evaluate_network_multiple, num_inputs
 mutable struct NNet
     file::AbstractString
     weights::Array{Any,1}

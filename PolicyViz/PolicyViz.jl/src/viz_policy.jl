@@ -1,4 +1,4 @@
-export viz_policy, percCorrect, get_belief
+#export viz_policy, percCorrect, get_belief
 
 """
 Helper function to draw aircraft
@@ -209,7 +209,7 @@ function viz_policy(;nnetPath::AbstractString="",tablePath::AbstractString="",ba
                             colormap = ColorMaps.RGBArrayMap(ra_colors), colorbar=false),
                         Plots.Command(getACString(0.0,0.0,0.0,"black","white")),
                         Plots.Command(getACString(psi,RANGEMAX*0.82/zoom/xscale - xshift,RANGEMAX*0.82/zoom/yscale- yshift,"red","black"))
-                        ], xlabel="Downrange (kft)", ylabel="Crossrange (kft)", title="Training Data"))
+                        ], xlabel="East (kft)", ylabel="North (kft)", title="Policy"))
         end
         
         # Plot neural network, if possible
