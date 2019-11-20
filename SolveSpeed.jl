@@ -12,10 +12,10 @@
 
 
 ### OPTIONS ###
-saveFile = "/scratch/smkatz/test_speed.h5"
-binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test_speed.bin"
+saveFile = "/scratch/smkatz/test_speed_v2.h5"
+binFile = "/home/smkatz/Documents/Airbus/XrSim/data_files/test_speed_v2.bin"
 nTau_warm = 8
-nTau_max = 60
+nTau_max = 100
 ###############
 
 ns = n_interpolating_points(interp)

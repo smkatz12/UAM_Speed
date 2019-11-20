@@ -25,6 +25,15 @@ end
 
 # Dynamic equations
 function dynamics(r::Float64,t::Float64,p::Float64,vown::Float64,vint::Float64,ownAccel::Float64, intAccel::Float64, ra::Int)
+    ############# Added this 11/11 ############################
+    # Clip own acceleration so that it doesn't go backwards
+    if vown + ownAccel*dt < 0
+        ownAccel = -vown/dt
+    elseif vint + intAccel*dt < 0
+        intAccel = -vint/dt
+    end
+    ###########################################################
+    
     vown_new = vown + ownAccel*dt
     vint_new = vint + intAccel*dt
 

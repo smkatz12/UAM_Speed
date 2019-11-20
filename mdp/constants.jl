@@ -32,7 +32,7 @@ INTRSPEEDS = [0.0, 8.0, 16.0, 24.0, 32.0, 40.0].*mps2fps #ft/s
 # PSIS   = Array(LinRange(-π,π,21))
 # OWNSPEEDS = [0.0, 4.0].*mps2fps   #ft/s
 # INTRSPEEDS = [0.0, 8.0].*mps2fps #ft/s
-
+ 
 interp = LocalGIFunctionApproximator(RectangleGrid(RANGES,THETAS,PSIS,OWNSPEEDS,INTRSPEEDS,ACTIONS)) # Create the local function approximator using the grid
 
 
@@ -43,4 +43,4 @@ accels = Dict(COC=>([0.34,0.33,0.33],[0.0,-0.01g,0.01g]),
               WA=>(probs,[0.04g,0.035g,0.045g]),
               SD=>(probs,[-0.08g,-0.075g,-0.085g]),
               SA=>(probs,[0.08g,0.075g,0.085g]),
-              -1=>([0.34,0.33,0.33],[0.0,-0.01g,0.01g])) # FOR v5, 0, 1, -1
+              -1=>([0.34,0.33,0.33],[0.0,-0.1g,0.1g])) # FOR v5, 0, 1, -1
